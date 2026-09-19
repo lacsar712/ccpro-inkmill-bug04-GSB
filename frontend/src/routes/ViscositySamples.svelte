@@ -37,9 +37,11 @@
 
   onMount(load);
 
-  function millLabel(id: number): string {
-    const m = mills.find((x) => x.id === id);
-    return m ? `${m.millCode} (#${m.id})` : `#${id}`;
+  function millLabel(row: ViscositySample): string {
+    if (row.millId == null) return '未分配机台（原机台已删除）';
+    const m = mills.find((x) => x.id === row.millId);
+    if (m) return `${m.millCode} (#${m.id})`;
+    return row.millCode ? `${row.millCode} (#${row.millId})` : `#${row.millId}`;
   }
 
   function reset() {
@@ -62,7 +64,7 @@
   function edit(row: ViscositySample) {
     editingId = row.id;
     form = {
-      millId: String(row.millId),
+      millId: row.millId != null ? String(row.millId) : (mills[0] ? String(mills[0].id) : ''),
       sampledAt: toLocalInput(row.sampledAt),
       viscosityPaS: String(row.viscosityPaS),
       tempC: row.tempC != null ? String(row.tempC) : '',
@@ -157,7 +159,7 @@
       {#each rows as row}
         <tr>
           <td>{row.id}</td>
-          <td>{millLabel(row.millId)}</td>
+          <td>{millLabel(row)}</td>
           <td>{row.sampledAt}</td>
           <td>{row.viscosityPaS}</td>
           <td>{row.tempC ?? '—'}</td>

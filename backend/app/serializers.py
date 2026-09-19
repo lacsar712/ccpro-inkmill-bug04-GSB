@@ -47,7 +47,7 @@ def viscosity_sample_json(row: ViscositySample) -> dict:
     return {
         "id": row.id,
         "millId": row.mill_id,
-        "millCode": row.mill.mill_code,
+        "millCode": row.mill.mill_code if row.mill is not None else None,
         "sampledAt": dt_to_json(row.sampled_at),
         "viscosityPaS": _num(row.viscosity_pa_s) or 0,
         "tempC": _num(row.temp_c),
@@ -59,7 +59,7 @@ def grind_pass_json(row: GrindPass) -> dict:
     return {
         "id": row.id,
         "millId": row.mill_id,
-        "millCode": row.mill.mill_code,
+        "millCode": row.mill.mill_code if row.mill is not None else None,
         "startedAt": dt_to_json(row.started_at),
         "passNo": row.pass_no,
         "durationMin": _num(row.duration_min) or 0,

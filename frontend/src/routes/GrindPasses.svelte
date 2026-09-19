@@ -38,9 +38,11 @@
 
   onMount(load);
 
-  function millLabel(id: number): string {
-    const m = mills.find((x) => x.id === id);
-    return m ? `${m.millCode} (#${m.id})` : `#${id}`;
+  function millLabel(row: GrindPass): string {
+    if (row.millId == null) return '未分配机台（原机台已删除）';
+    const m = mills.find((x) => x.id === row.millId);
+    if (m) return `${m.millCode} (#${m.id})`;
+    return row.millCode ? `${row.millCode} (#${row.millId})` : `#${row.millId}`;
   }
 
   function reset() {
@@ -64,7 +66,7 @@
   function edit(row: GrindPass) {
     editingId = row.id;
     form = {
-      millId: String(row.millId),
+      millId: row.millId != null ? String(row.millId) : (mills[0] ? String(mills[0].id) : ''),
       startedAt: toLocalInput(row.startedAt),
       passNo: String(row.passNo),
       durationMin: String(row.durationMin),
@@ -163,7 +165,7 @@
       {#each rows as row}
         <tr>
           <td>{row.id}</td>
-          <td>{millLabel(row.millId)}</td>
+          <td>{millLabel(row)}</td>
           <td>{row.startedAt}</td>
           <td>{row.passNo}</td>
           <td>{row.durationMin}</td>
