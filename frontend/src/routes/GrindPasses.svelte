@@ -38,9 +38,10 @@
 
   onMount(load);
 
-  function millLabel(id: number): string {
+  function millLabel(id: number | null): string {
+    if (id == null) return '（机台已删除）';
     const m = mills.find((x) => x.id === id);
-    return m ? `${m.millCode} (#${m.id})` : `#${id}`;
+    return m ? `${m.millCode} (#${m.id})` : `#${id}（机台缺失）`;
   }
 
   function reset() {
@@ -64,7 +65,7 @@
   function edit(row: GrindPass) {
     editingId = row.id;
     form = {
-      millId: String(row.millId),
+      millId: row.millId != null ? String(row.millId) : '',
       startedAt: toLocalInput(row.startedAt),
       passNo: String(row.passNo),
       durationMin: String(row.durationMin),

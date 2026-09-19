@@ -27,7 +27,8 @@ export interface Mill {
 
 export interface ViscositySample {
   id: number;
-  millId: number;
+  millId: number | null;
+  millCode: string | null;
   sampledAt: string;
   viscosityPaS: number;
   tempC: number | null;
@@ -36,7 +37,8 @@ export interface ViscositySample {
 
 export interface GrindPass {
   id: number;
-  millId: number;
+  millId: number | null;
+  millCode: string | null;
   startedAt: string;
   passNo: number;
   durationMin: number;

@@ -37,9 +37,10 @@
 
   onMount(load);
 
-  function millLabel(id: number): string {
+  function millLabel(id: number | null): string {
+    if (id == null) return '（机台已删除）';
     const m = mills.find((x) => x.id === id);
-    return m ? `${m.millCode} (#${m.id})` : `#${id}`;
+    return m ? `${m.millCode} (#${m.id})` : `#${id}（机台缺失）`;
   }
 
   function reset() {
@@ -62,7 +63,7 @@
   function edit(row: ViscositySample) {
     editingId = row.id;
     form = {
-      millId: String(row.millId),
+      millId: row.millId != null ? String(row.millId) : '',
       sampledAt: toLocalInput(row.sampledAt),
       viscosityPaS: String(row.viscosityPaS),
       tempC: row.tempC != null ? String(row.tempC) : '',

@@ -2,10 +2,13 @@ from decimal import Decimal
 
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
+from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 
 from app.database import SessionLocal
+from app.models.grind_pass import GrindPass
 from app.models.mill import MILL_STATUSES, Mill
+from app.models.viscosity_sample import ViscositySample
 from app.models.workshop import Workshop
 from app.serializers import mill_json
 from app.utils import error
@@ -118,6 +121,30 @@ def delete_mill(item_id: int):
         row = db.get(Mill, item_id)
         if not row:
             return error("研磨机不存在", 404)
+
+        sample_count = (
+            db.scalar(
+                select(func.count())
+                .select_from(ViscositySample)
+                .where(ViscositySample.mill_id == item_id)
+            )
+            or 0
+        )
+        pass_count = (
+            db.scalar(
+                select(func.count())
+                .select_from(GrindPass)
+                .where(GrindPass.mill_id == item_id)
+            )
+            or 0
+        )
+        if sample_count or pass_count:
+            return error(
+                f"无法删除研磨机：仍有 {sample_count} 条粘度取样、"
+                f"{pass_count} 条研磨遍次记录，请先清理这些数据",
+                409,
+            )
+
         db.delete(row)
         db.commit()
         return jsonify({"ok": True})
