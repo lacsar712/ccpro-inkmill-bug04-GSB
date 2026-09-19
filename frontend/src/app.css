@@ -1,0 +1,208 @@
+:root {
+  --ink-950: #0a0a0a;
+  --ink-900: #121212;
+  --ink-800: #1c1c1c;
+  --ink-700: #2a2a2a;
+  --vermillion-900: #8b2500;
+  --vermillion-700: #c0392b;
+  --vermillion-500: #e74c3c;
+  --vermillion-400: #ff6b4a;
+  --paper: #f0ebe3;
+  --steel: #b8b0a8;
+  --mist: #e8e4dc;
+  --panel: rgba(18, 18, 18, 0.94);
+  --line: rgba(232, 228, 220, 0.14);
+  --ok: #3d9a6a;
+  --font-display: 'Oswald', 'Noto Sans SC', sans-serif;
+  --font-body: 'Noto Sans SC', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--font-body);
+  color: var(--mist);
+  background:
+    radial-gradient(ellipse 70% 45% at 15% -5%, rgba(231, 76, 60, 0.18), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 95% 10%, rgba(255, 107, 74, 0.08), transparent 50%),
+    linear-gradient(165deg, var(--ink-950), var(--ink-900) 50%, #0d0806 100%);
+}
+
+body {
+  background-attachment: fixed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.page-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  letter-spacing: 0.06em;
+  font-size: 1.9rem;
+}
+
+.page-head p {
+  margin: 0.35rem 0 1.2rem;
+  color: var(--steel);
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 1rem 1.1rem 1.15rem;
+  margin-bottom: 1rem;
+}
+
+.panel h2 {
+  margin: 0 0 0.8rem;
+  font-size: 1rem;
+  color: var(--paper);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.fields .full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--steel);
+}
+
+.field input,
+.field select,
+.field textarea {
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.35);
+  color: white;
+  padding: 0.55rem 0.65rem;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--vermillion-700);
+}
+
+.actions {
+  margin-top: 0.9rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  border: none;
+  background: linear-gradient(90deg, var(--vermillion-900), var(--vermillion-700));
+  color: white;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-ghost {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--steel);
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 0.65rem 0.4rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.data-table th {
+  color: var(--vermillion-400);
+  font-weight: 500;
+}
+
+.ops {
+  white-space: nowrap;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--paper);
+  padding: 0 0.35rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link-btn.danger {
+  color: var(--vermillion-400);
+}
+
+.err {
+  color: var(--vermillion-400);
+  margin-bottom: 0.8rem;
+}
+
+.muted {
+  color: var(--steel);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.badge.grinding {
+  border-color: var(--vermillion-700);
+  color: var(--vermillion-400);
+}
+
+.badge.idle {
+  color: var(--steel);
+}
+
+.badge.wash {
+  color: var(--paper);
+}
+
+@media (max-width: 760px) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+}
